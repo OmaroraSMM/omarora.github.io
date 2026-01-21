@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Om Arora | Social Media Manager & Content Creator Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-purple: #8A2BE2;
+            --secondary-purple: #4B0082;
+            --accent-purple: #E100FF;
+            --bg-light: #ffffff;
+            --text-light: #1a1a1a;
+            --glass-light: rgba(255, 255, 255, 0.7);
+            
+            --bg-dark: #0a0a0c;
+            --text-dark: #f8f9fa;
+            --glass-dark: rgba(255, 255, 255, 0.05);
+            
+            --gradient: linear-gradient(135deg, var(--primary-purple), var(--accent-purple));
+        }
+
+        [data-theme="dark"] {
+            --bg-light: var(--bg-dark);
+            --text-light: var(--text-dark);
+            --glass-light: var(--glass-dark);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        /* --- Floating Animations --- */
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-animation { animation: floating 4s ease-in-out infinite; }
+
+        /* --- Dynamic Header Reveal --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 10%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(15px);
+            z-index: 1000; border-bottom: 1px solid rgba(138, 43, 226, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        nav a { text-decoration: none; color: var(--text-light); font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        
+        /* Dynamic Link Hover Animation */
+        nav a:hover { 
+            color: var(--primary-purple); 
+            transform: translateY(-2px);
+            display: inline-block;
+        }
+
+        .theme-toggle { cursor: pointer; font-size: 1.2rem; color: var(--primary-purple); }
+
+        /* --- Global Styling --- */
+        section { padding: 120px 10%; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 3rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- ENHANCED HOVER ANIMATIONS --- */
+        .glass-card {
+            background: var(--glass-light);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy hover effect */
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover { 
+            transform: translateY(-15px) scale(1.03); /* Lifts and slightly grows */
+            border-color: var(--primary-purple); 
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.2);
+        }
+
+        /* Subtle Glow on Hover */
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+        .glass-card:hover::before { left: 100%; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+
+        /* Icon Hover Animation */
+        .illu-icon { font-size: 3rem; margin-bottom: 1.5rem; color: var(--primary-purple); display: block; transition: 0.4s; }
+        .glass-card:hover .illu-icon { transform: rotate(10deg) scale(1.1); }
+
+        .price-tag { font-size: 2rem; font-weight: 800; color: var(--primary-purple); margin-bottom: 1.5rem; display: block; }
+        
+        .list-unstyled { list-style: none; }
+        .list-unstyled li { margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+        .list-unstyled i { color: var(--primary-purple); font-size: 0.8rem; margin-top: 5px; }
+
+        /* --- Contact Form Interaction --- */
+        .contact-container { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; }
+        input, textarea { width: 100%; padding: 1.2rem; margin-bottom: 1rem; border-radius: 12px; border: 1px solid rgba(138, 43, 226, 0.2); background: transparent; color: var(--text-light); outline: none; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: var(--accent-purple); box-shadow: 0 0 15px rgba(138, 43, 226, 0.1); }
+
+        .btn-submit { background: var(--gradient); color: white; border: none; padding: 1.2rem 2.5rem; border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.4s; }
+        .btn-submit:hover { opacity: 0.9; box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3); transform: scale(1.02); letter-spacing: 1px; }
+
+        @media (max-width: 900px) {
+            .contact-container { grid-template-columns: 1fr; }
+            nav { display: none; }
+            section { padding: 80px 5%; }
+            .section-header h2 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <header>
+        <div class="logo" style="font-weight: 800; font-size: 1.5rem;">OM ARORA</div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Projects</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="theme-toggle" id="themeSwitch"><i class="fas fa-moon"></i></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero" style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <i class="fas fa-wand-magic-sparkles illu-icon float-animation" style="font-size: 4rem;"></i>
+        <h1 data-aos="zoom-in" data-aos-duration="1500" style="font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; line-height: 1.1;">Building Strong <br><span style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Online Identities</span></h1>
+        <p data-aos="fade-up" data-aos-delay="500" style="font-size: 1.2rem; margin-top: 1.5rem; opacity: 0.8; max-width: 800px;">Social Media Manager & Content Creator with 2+ years of experience in digital marketing, influencer marketing, and brand communication.</p>
+    </section>
+
+    <section id="about">
+        <div class="section-header" data-aos="fade-down">
+            <h2>About Me</h2>
+        </div>
+        <div class="grid-2">
+            <div class="glass-card" data-aos="fade-right">
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Hi, I'm Om Arora. I specialize in building strong online identities for brands through content strategy, visual storytelling, and performance-driven social media marketing. I've worked across industries including textile, fashion, automobile, manufacturing, immigration, education, and lifestyle brands.
+                </p>
+            </div>
+            <div class="glass-card" data-aos="fade-left" data-aos-delay="200">
+                <h3>Why Choose Me?</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem;">
+                    <li><i class="fas fa-check-circle"></i> Strategy + Creativity Together</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-Industry Experience</li>
+                    <li><i class="fas fa-check-circle"></i> One-Stop Digital Solution</li>
+                    <li><i class="fas fa-check-circle"></i> Trend-Focused & Platform-Smart</li>
+                    <li><i class="fas fa-check-circle"></i> Data-Driven Decisions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="section-header" data-aos="fade-up">
+            <h2>What We Do</h2>
+        </div>
+        <div class="grid-3">
+            <div class="glass-card" data-aos="flip-left">
+                <i class="fas fa-share-nodes illu-icon"></i>
+                <h3>Social Media Management</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem; font-size: 0.9rem;">
+                    <li><i class="fas fa-circle"></i> Instagram, Facebook & LinkedIn handling</li>
+                    <li><i class="fas fa-circle"></i> Monthly content planning & calendars</li>
+                    <li><i class="fas fa-circle"></i> Caption writing & hashtag strategy</li>
+                    <li><i class="fas fa-circle"></i> Profile optimization & Community management</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="100">
+                <i class="fas fa-users illu-icon"></i>
+                <h3>Influencer Marketing</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem; font-size: 0.9rem;">
+                    <li><i class="fas fa-circle"></i> Nano to macro influencer collaborations</li>
+                    <li><i class="fas fa-circle"></i> Influencer outreach & coordination</li>
+                    <li><i class="fas fa-circle"></i> Campaign planning, execution & tracking</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="200">
+                <i class="fas fa-video illu-icon"></i>
+                <h3>Graphic & Video Editing</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem; font-size: 0.9rem;">
+                    <li><i class="fas fa-circle"></i> Canva, Photoshop, Affinity</li>
+                    <li><i class="fas fa-circle"></i> CapCut video & Davinci editing</li>
+                    <li><i class="fas fa-circle"></i> Transitions, effects & reel formatting</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="300">
+                <i class="fas fa-clapperboard illu-icon"></i>
+                <h3>Content Creation</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem; font-size: 0.9rem;">
+                    <li><i class="fas fa-circle"></i> Reels & short-form video strategy</li>
+                    <li><i class="fas fa-circle"></i> Static & carousel creatives</li>
+                    <li><i class="fas fa-circle"></i> Trend-based & Storytelling posts</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="400">
+                <i class="fas fa-laptop-code illu-icon"></i>
+                <h3>Website Design</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem; font-size: 0.9rem;">
+                    <li><i class="fas fa-circle"></i> Business & brand websites</li>
+                    <li><i class="fas fa-circle"></i> Landing pages for lead generation</li>
+                    <li><i class="fas fa-circle"></i> UI/UX-focused layouts</li>
+                    <li><i class="fas fa-circle"></i> SEO-friendly basic setup</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="500">
+                <i class="fas fa-bullhorn illu-icon"></i>
+                <h3>Paid Advertising</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem; font-size: 0.9rem;">
+                    <li><i class="fas fa-circle"></i> Meta Ads (FB & IG) Setup</li>
+                    <li><i class="fas fa-circle"></i> Google Ads (Search/Keyword)</li>
+                    <li><i class="fas fa-circle"></i> Conversion-focused campaigns</li>
+                    <li><i class="fas fa-circle"></i> Performance tracking & optimization</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="section-header" data-aos="zoom-in">
+            <h2>Project Portfolio</h2>
+        </div>
+        <div class="grid-2">
+            <div class="glass-card" data-aos="fade-up">
+                <h3>Job Projects</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                    <span>Gna Gears</span>
+                    <span>Aarti Steel International Pvt Ltd</span>
+                    <span>Tech Auto</span>
+                    <span>Ashok Shawls</span>
+                    <span>Headmaster's Academy</span>
+                    <span>Hair Palace Salon</span>
+                    <span>Doc Gear</span>
+                    <span>Mirror me</span>
+                    <span>Heartbeat Global</span>
+                    <span>Bhushan Steel Corporation</span>
+                    <span>Chakradhari Celebration</span>
+                    <span>lapinoz Pizza</span>
+                </div>
+            </div>
+            <div class="glass-card" data-aos="fade-up" data-aos-delay="200">
+                <h3>Freelancer Projects</h3>
+                <ul class="list-unstyled" style="margin-top: 1rem;">
+                    <li><i class="fas fa-star"></i> <strong>Faceyoguez:</strong> 799,093 Views reached</li>
+                    <li><i class="fas fa-star"></i> <strong>Lucche the hunger Filler:</strong> Brand strategy</li>
+                    <li><i class="fas fa-star"></i> <strong>Yadav Shoes:</strong> Viral content growth</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="section-header" data-aos="fade-down">
+            <h2>Social Media Pricing</h2>
+        </div>
+        <div class="grid-3">
+            <div class="glass-card" data-aos="zoom-in">
+                <h3>Basic Package</h3>
+                <span class="price-tag">10,000 RS</span>
+                <ul class="list-unstyled" style="font-size: 0.9rem;">
+                    <li><i class="fas fa-check"></i> 10 Posts (5 reels & 5 posts)</li>
+                    <li><i class="fas fa-check"></i> Content Strategy & Calendar</li>
+                    <li><i class="fas fa-check"></i> Social Media Management</li>
+                    <li><i class="fas fa-check"></i> Graphic and Editing</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="zoom-in" data-aos-delay="200" style="border: 2px solid var(--primary-purple);">
+                <div style="position: absolute; top: 10px; right: 20px; background: var(--gradient); font-size: 0.7rem; color: white; padding: 4px 12px; border-radius: 20px;">MOST POPULAR</div>
+                <h3>Gold Package</h3>
+                <span class="price-tag">12,000 RS</span>
+                <ul class="list-unstyled" style="font-size: 0.9rem;">
+                    <li><i class="fas fa-check"></i> 12 Posts (8 reels & 4 posts)</li>
+                    <li><i class="fas fa-check"></i> Strategy and Market research</li>
+                    <li><i class="fas fa-check"></i> Content creation, Shoot & Editing</li>
+                    <li><i class="fas fa-check"></i> 3 Stories weekly</li>
+                </ul>
+            </div>
+            <div class="glass-card" data-aos="zoom-in" data-aos-delay="400">
+                <h3>Platinum Package</h3>
+                <span class="price-tag">15,000 RS</span>
+                <ul class="list-unstyled" style="font-size: 0.9rem;">
+                    <li><i class="fas fa-check"></i> 15 Posts (8 reels & 4 posts)</li>
+                    <li><i class="fas fa-check"></i> Strategy and Market research</li>
+                    <li><i class="fas fa-check"></i> Content creation, Shoot & Editing</li>
+                    <li><i class="fas fa-check"></i> 5 stories Weekly</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Let's Work Together</h2>
+        </div>
+        <div class="contact-container">
+            <div class="glass-card" data-aos="fade-right">
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.9rem; opacity: 0.7;">Contact Number</p>
+                    <p style="font-size: 1.1rem; font-weight: 700;">78149-93399</p>
+                </div>
+                <div>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">Email Address</p>
+                    <p style="font-size: 1.1rem; font-weight: 700;">OMA65727@GMAIL.COM</p>
+                </div>
+            </div>
+            <form class="glass-card" data-aos="fade-left" onsubmit="event.preventDefault(); alert('Message Sent!');">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <textarea rows="4" placeholder="Tell me about your project..." required></textarea>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 3rem; text-align: center; opacity: 0.6; font-size: 0.8rem; border-top: 1px solid rgba(138, 43, 226, 0.1);">
+        &copy; 2026 Om Arora. Currently freelance digital marketer.
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        /* Initialization with 'once: false' allows animations to repeat on scroll up */
+        AOS.init({ 
+            duration: 1000, 
+            once: false,
+            mirror: true
+        });
+
+        const themeBtn = document.getElementById('themeSwitch');
+        themeBtn.addEventListener('click', () => {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            themeBtn.innerHTML = newTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        });
+    </script>
+</body>
+</html>
